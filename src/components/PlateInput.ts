@@ -263,7 +263,7 @@ export class PlateInput extends BaseComponent {
       color: var(--parking-color-text-primary);
       margin-bottom: 12px;
     `;
-    title.textContent = '我的车辆';
+    title.textContent = this.t('plate.myVehicles');
 
     const list = document.createElement('div');
     list.style.cssText = `
@@ -326,7 +326,7 @@ export class PlateInput extends BaseComponent {
       if (vehicle.isDefault) {
         const defaultTag = document.createElement('span');
         defaultTag.className = 'parking-sdk-tag parking-sdk-tag-primary';
-        defaultTag.textContent = '默认';
+        defaultTag.textContent = this.t('plate.defaultTag');
         item.appendChild(defaultTag);
       }
 

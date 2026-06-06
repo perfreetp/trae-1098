@@ -248,7 +248,7 @@ export class CouponList extends BaseComponent {
       tip.style.cssText = `
         color: var(--parking-color-warning);
       `;
-      tip.textContent = `满${coupon.minAmount}元可用`;
+      tip.textContent = this.t('coupon.minAmount', { amount: coupon.minAmount });
       bottomRow.appendChild(tip);
     }
 
@@ -257,7 +257,7 @@ export class CouponList extends BaseComponent {
       statusTip.style.cssText = `
         color: ${coupon.status === 'used' ? 'var(--parking-color-text-tertiary)' : 'var(--parking-color-error)'};
       `;
-      statusTip.textContent = coupon.status === 'used' ? '已使用' : '已过期';
+      statusTip.textContent = coupon.status === 'used' ? this.t('coupon.used') : this.t('coupon.expired');
       bottomRow.appendChild(statusTip);
     }
 
@@ -285,11 +285,11 @@ export class CouponList extends BaseComponent {
   private getCouponTypeText(coupon: Coupon): string {
     switch (coupon.type) {
       case 'discount':
-        return '折';
+        return this.t('coupon.discountSuffix');
       case 'amount':
-        return '优惠券';
+        return this.t('coupon.couponSuffix');
       case 'free_hours':
-        return '免费时长';
+        return this.t('coupon.freeHoursSuffix');
       default:
         return '';
     }

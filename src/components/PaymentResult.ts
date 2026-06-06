@@ -163,7 +163,7 @@ export class PaymentResult extends BaseComponent {
     }
 
     if (this.transactionId) {
-      this.renderInfoRow(infoWrapper, '交易单号', this.transactionId);
+      this.renderInfoRow(infoWrapper, this.t('payment.transactionId'), this.transactionId);
     }
 
     container.appendChild(infoWrapper);

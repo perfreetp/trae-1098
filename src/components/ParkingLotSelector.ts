@@ -172,7 +172,7 @@ export class ParkingLotSelector extends BaseComponent {
     item.addEventListener('click', () => {
       this.selectedLotId = lot.id;
       this.emit('select', lot);
-      this.render();
+      this.updateLotList();
     });
 
     const header = document.createElement('div');
@@ -294,9 +294,9 @@ export class ParkingLotSelector extends BaseComponent {
 
   private getTypeLabel(type: string): string {
     const labels: Record<string, string> = {
-      indoor: '室内',
-      outdoor: '室外',
-      underground: '地下',
+      indoor: this.t('parking.typeIndoor'),
+      outdoor: this.t('parking.typeOutdoor'),
+      underground: this.t('parking.typeUnderground'),
     };
     return labels[type] || type;
   }

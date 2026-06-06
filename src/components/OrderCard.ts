@@ -283,14 +283,14 @@ export class OrderCard extends BaseComponent {
 
   private formatDuration(minutes: number): string {
     if (minutes < 60) {
-      return `${minutes}分钟`;
+      return `${minutes}${this.t('common.minutes')}`;
     }
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
     if (mins === 0) {
-      return `${hours}小时`;
+      return `${hours}${this.t('common.hours')}`;
     }
-    return `${hours}小时${mins}分钟`;
+    return `${hours}${this.t('common.hours')}${mins}${this.t('common.minutes')}`;
   }
 
   public setOrder(order: ParkingOrder): void {

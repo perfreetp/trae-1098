@@ -93,7 +93,7 @@ export class InvoiceApply extends BaseComponent {
       color: var(--parking-color-text-primary);
       margin-bottom: 12px;
     `;
-    label.textContent = '开票订单';
+    label.textContent = this.t('invoice.ordersTitle');
 
     const list = document.createElement('div');
     list.style.cssText = `
@@ -265,7 +265,9 @@ export class InvoiceApply extends BaseComponent {
     const input = document.createElement('input');
     input.type = 'text';
     input.className = 'parking-sdk-input';
-    input.placeholder = this.formData.invoiceType === 'personal' ? '请输入个人姓名' : '请输入公司名称';
+    input.placeholder = this.formData.invoiceType === 'personal' 
+      ? this.t('invoice.placeholderNamePersonal') 
+      : this.t('invoice.placeholderNameCompany');
     input.value = this.formData.title;
 
     input.addEventListener('input', (e) => {
@@ -306,7 +308,7 @@ export class InvoiceApply extends BaseComponent {
     const input = document.createElement('input');
     input.type = 'text';
     input.className = 'parking-sdk-input';
-    input.placeholder = '请输入纳税人识别号';
+    input.placeholder = this.t('invoice.placeholderTaxNumber');
     input.value = this.formData.taxNumber;
 
     input.addEventListener('input', (e) => {
@@ -382,7 +384,11 @@ export class InvoiceApply extends BaseComponent {
     btn.disabled = this.isSubmitting;
 
     if (this.isSubmitting) {
-      btn.innerHTML = '<span class="parking-sdk-loading" style="margin-right: 8px;"></span> 提交中...';
+      const loadingSpan = document.createElement('span');
+      loadingSpan.className = 'parking-sdk-loading';
+      loadingSpan.style.marginRight = '8px';
+      btn.appendChild(loadingSpan);
+      btn.appendChild(document.createTextNode(' ' + this.t('common.submitting')));
     } else {
       btn.textContent = this.t('invoice.submit');
     }
@@ -398,17 +404,19 @@ export class InvoiceApply extends BaseComponent {
     this.errors = {};
 
     if (!this.formData.title.trim()) {
-      this.errors.title = this.formData.invoiceType === 'personal' ? '请输入姓名' : '请输入公司名称';
+      this.errors.title = this.formData.invoiceType === 'personal' 
+        ? this.t('invoice.errorName') 
+        : this.t('invoice.errorCompany');
     }
 
     if (this.formData.invoiceType === 'company' && !this.formData.taxNumber.trim()) {
-      this.errors.taxNumber = '请输入纳税人识别号';
+      this.errors.taxNumber = this.t('invoice.errorTaxNumber');
     }
 
     if (!this.formData.email.trim()) {
-      this.errors.email = '请输入邮箱地址';
+      this.errors.email = this.t('invoice.errorEmail');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.formData.email)) {
-      this.errors.email = '请输入正确的邮箱地址';
+      this.errors.email = this.t('invoice.errorEmailInvalid');
     }
 
     this.render();
