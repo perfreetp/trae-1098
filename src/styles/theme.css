@@ -1,0 +1,213 @@
+:root[data-parking-theme='light'] {
+  --parking-color-primary: #1890ff;
+  --parking-color-primary-hover: #40a9ff;
+  --parking-color-success: #52c41a;
+  --parking-color-warning: #faad14;
+  --parking-color-error: #ff4d4f;
+  --parking-color-text-primary: #262626;
+  --parking-color-text-secondary: #595959;
+  --parking-color-text-tertiary: #8c8c8c;
+  --parking-color-bg-primary: #ffffff;
+  --parking-color-bg-secondary: #f5f5f5;
+  --parking-color-bg-tertiary: #fafafa;
+  --parking-color-border: #d9d9d9;
+  --parking-color-border-light: #f0f0f0;
+  --parking-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --parking-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --parking-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --parking-radius-sm: 4px;
+  --parking-radius-md: 8px;
+  --parking-radius-lg: 12px;
+  --parking-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+:root[data-parking-theme='dark'] {
+  --parking-color-primary: #177ddc;
+  --parking-color-primary-hover: #3c9ae8;
+  --parking-color-success: #49aa19;
+  --parking-color-warning: #d89614;
+  --parking-color-error: #d32029;
+  --parking-color-text-primary: #ffffff;
+  --parking-color-text-secondary: #c9cdd4;
+  --parking-color-text-tertiary: #86909c;
+  --parking-color-bg-primary: #1d2129;
+  --parking-color-bg-secondary: #24292e;
+  --parking-color-bg-tertiary: #2f343a;
+  --parking-color-border: #4e5969;
+  --parking-color-border-light: #353a40;
+  --parking-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --parking-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --parking-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+.parking-sdk {
+  font-family: var(--parking-font-family);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--parking-color-text-primary);
+  background: var(--parking-color-bg-primary);
+  box-sizing: border-box;
+}
+
+.parking-sdk *,
+.parking-sdk *::before,
+.parking-sdk *::after {
+  box-sizing: border-box;
+}
+
+.parking-sdk-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--parking-radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.parking-sdk-btn-primary {
+  background: var(--parking-color-primary);
+  color: #fff;
+}
+
+.parking-sdk-btn-primary:hover {
+  background: var(--parking-color-primary-hover);
+}
+
+.parking-sdk-btn-default {
+  background: var(--parking-color-bg-secondary);
+  color: var(--parking-color-text-primary);
+  border: 1px solid var(--parking-color-border);
+}
+
+.parking-sdk-btn-default:hover {
+  border-color: var(--parking-color-primary);
+  color: var(--parking-color-primary);
+}
+
+.parking-sdk-btn-block {
+  width: 100%;
+}
+
+.parking-sdk-btn-lg {
+  padding: 12px 24px;
+  font-size: 16px;
+}
+
+.parking-sdk-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--parking-color-border);
+  border-radius: var(--parking-radius-md);
+  font-size: 14px;
+  color: var(--parking-color-text-primary);
+  background: var(--parking-color-bg-primary);
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.parking-sdk-input:focus {
+  border-color: var(--parking-color-primary);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.parking-sdk-input::placeholder {
+  color: var(--parking-color-text-tertiary);
+}
+
+.parking-sdk-card {
+  background: var(--parking-color-bg-primary);
+  border-radius: var(--parking-radius-lg);
+  box-shadow: var(--parking-shadow-md);
+  padding: 16px;
+}
+
+.parking-sdk-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.parking-sdk-tag-success {
+  background: rgba(82, 196, 26, 0.1);
+  color: var(--parking-color-success);
+}
+
+.parking-sdk-tag-warning {
+  background: rgba(250, 173, 20, 0.1);
+  color: var(--parking-color-warning);
+}
+
+.parking-sdk-tag-error {
+  background: rgba(255, 77, 79, 0.1);
+  color: var(--parking-color-error);
+}
+
+.parking-sdk-tag-primary {
+  background: rgba(24, 144, 255, 0.1);
+  color: var(--parking-color-primary);
+}
+
+.parking-sdk-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--parking-color-border-light);
+  border-top-color: var(--parking-color-primary);
+  border-radius: 50%;
+  animation: parking-spin 0.8s linear infinite;
+}
+
+@keyframes parking-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes parkingSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes parkingSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+}
+
+.parking-sdk-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  color: var(--parking-color-text-tertiary);
+}
+
+.parking-sdk-empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.parking-sdk-spacer {
+  flex: 1;
+}
