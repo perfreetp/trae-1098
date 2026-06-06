@@ -138,8 +138,8 @@ export class SmartParkingSDK {
   }
 
   public setLanguage(language: Language): void {
-    this.config.setLanguage(language);
     this.i18n.setLanguage(language);
+    this.config.setLanguage(language);
     this.track('language_change', { language });
   }
 

@@ -425,6 +425,14 @@ export class InvoiceApply extends BaseComponent {
       ...this.formData,
       orderIds: this.orderIds,
       amount: this.totalAmount,
+      done: (success: boolean = true) => {
+        this.isSubmitting = false;
+        if (success) {
+          this.render();
+        } else {
+          this.render();
+        }
+      },
     });
   }
 

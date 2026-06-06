@@ -324,6 +324,9 @@
         console.log('[InvoiceApply]', event, data);
         if (event === 'submit') {
           sdk.showToast('发票申请已提交', 'success');
+          if (data && typeof data.done === 'function') {
+            data.done(true);
+          }
         }
       },
     });

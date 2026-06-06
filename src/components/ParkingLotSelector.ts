@@ -17,6 +17,7 @@ export class ParkingLotSelector extends BaseComponent {
   private showSearch: boolean = true;
   private showDistance: boolean = true;
   private searchKeyword: string = '';
+  private listContainer: HTMLElement | null = null;
 
   constructor(
     options: ComponentOptions,
@@ -70,7 +71,7 @@ export class ParkingLotSelector extends BaseComponent {
     searchInput.addEventListener('input', (e) => {
       this.searchKeyword = (e.target as HTMLInputElement).value;
       this.emit('search', { keyword: this.searchKeyword });
-      this.render();
+      this.updateLotList();
     });
 
     const searchIcon = document.createElement('span');
@@ -90,9 +91,9 @@ export class ParkingLotSelector extends BaseComponent {
   }
 
   private renderLotList(): void {
-    const listWrapper = document.createElement('div');
-    listWrapper.className = 'parking-lot-selector__list';
-    listWrapper.style.cssText = `
+    this.listContainer = document.createElement('div');
+    this.listContainer.className = 'parking-lot-selector__list';
+    this.listContainer.style.cssText = `
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -100,17 +101,26 @@ export class ParkingLotSelector extends BaseComponent {
       overflow-y: auto;
     `;
 
+    this.populateLotList(this.listContainer);
+    this.element.appendChild(this.listContainer);
+  }
+
+  private updateLotList(): void {
+    if (!this.listContainer) return;
+    this.listContainer.innerHTML = '';
+    this.populateLotList(this.listContainer);
+  }
+
+  private populateLotList(container: HTMLElement): void {
     const filteredLots = this.getFilteredLots();
 
     if (filteredLots.length === 0) {
-      this.renderEmptyState(listWrapper);
+      this.renderEmptyState(container);
     } else {
       filteredLots.forEach((lot) => {
-        this.renderLotItem(listWrapper, lot);
+        this.renderLotItem(container, lot);
       });
     }
-
-    this.element.appendChild(listWrapper);
   }
 
   private getFilteredLots(): ParkingLot[] {
