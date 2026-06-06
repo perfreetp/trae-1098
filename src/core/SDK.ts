@@ -147,6 +147,14 @@ export class SmartParkingSDK {
     return this.config.getLanguage();
   }
 
+  public getI18n() {
+    return this.i18n;
+  }
+
+  public getConfig() {
+    return this.config.getConfig();
+  }
+
   public t(key: string, params?: Record<string, string | number>): string {
     return this.i18n.t(key, params);
   }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>智慧停车SDK - 演示</title>
+  <title id="page-title">智慧停车 SDK 演示</title>
   <style>
     * {
       margin: 0;
@@ -12,137 +12,381 @@
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f5f5f5;
-      padding: 20px;
+      background: var(--parking-bg-page, #f5f7fa);
+      color: var(--parking-color-text-primary, #1a1a1a);
+      padding: 24px;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
     }
     .header {
-      text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--parking-color-border, #e4e7ed);
     }
     .header h1 {
-      color: #262626;
-      margin-bottom: 10px;
-    }
-    .header p {
-      color: #8c8c8c;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
     }
     .controls {
       display: flex;
-      gap: 12px;
-      justify-content: center;
-      margin-bottom: 30px;
       flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 16px;
     }
-    .controls button {
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .control-group label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--parking-color-text-secondary, #606266);
+    }
+    .btn {
       padding: 8px 16px;
-      border: 1px solid #d9d9d9;
-      background: white;
-      border-radius: 8px;
+      border: 1px solid var(--parking-color-border, #dcdfe6);
+      border-radius: 6px;
+      background: #fff;
       cursor: pointer;
       font-size: 14px;
       transition: all 0.2s;
     }
-    .controls button:hover {
-      border-color: #1890ff;
-      color: #1890ff;
+    .btn:hover {
+      border-color: var(--parking-color-primary, #2563eb);
+      color: var(--parking-color-primary, #2563eb);
     }
-    .demo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-      gap: 24px;
-      max-width: 1400px;
-      margin: 0 auto;
+    .btn-primary {
+      background: var(--parking-color-primary, #2563eb);
+      color: #fff;
+      border-color: var(--parking-color-primary, #2563eb);
     }
-    .demo-card {
-      background: white;
+    .btn-primary:hover {
+      background: var(--parking-color-primary-dark, #1d4ed8);
+      color: #fff;
+    }
+    .btn-active {
+      background: var(--parking-color-primary, #2563eb);
+      color: #fff;
+      border-color: var(--parking-color-primary, #2563eb);
+    }
+    .scenario-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .scenario-tab {
+      padding: 8px 20px;
+      border-radius: 20px;
+      border: 1px solid var(--parking-color-border, #dcdfe6);
+      background: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .scenario-tab.active {
+      background: var(--parking-color-primary, #2563eb);
+      color: #fff;
+      border-color: var(--parking-color-primary, #2563eb);
+    }
+    .section {
+      margin-bottom: 32px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      padding-left: 12px;
+      border-left: 4px solid var(--parking-color-primary, #2563eb);
+    }
+    .component-wrapper {
+      background: #fff;
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
     }
-    .demo-card h3 {
-      color: #262626;
-      margin-bottom: 16px;
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 768px) {
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+    }
+    .extra-section {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 900px) {
+      .extra-section {
+        grid-template-columns: 1fr;
+      }
+    }
+    .mini-panel {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    }
+    .mini-panel h3 {
       font-size: 16px;
-      border-bottom: 1px solid #f0f0f0;
-      padding-bottom: 12px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--parking-color-text-primary, #1a1a1a);
     }
-    .component-container {
-      min-height: 100px;
+    .mini-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--parking-color-border, #dcdfe6);
+      border-radius: 6px;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .mini-input:focus {
+      outline: none;
+      border-color: var(--parking-color-primary, #2563eb);
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 14px;
+      border-bottom: 1px dashed var(--parking-color-border-light, #f0f0f0);
+    }
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    .info-label {
+      color: var(--parking-color-text-secondary, #909399);
+    }
+    .info-value {
+      font-weight: 500;
+      color: var(--parking-color-text-primary, #1a1a1a);
+    }
+    .status-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .status-active {
+      background: #e8f5e9;
+      color: #4caf50;
+    }
+    .status-warning {
+      background: #fff8e1;
+      color: #ff9800;
+    }
+    .status-error {
+      background: #ffebee;
+      color: #f44336;
+    }
+    .log-panel {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .log-header h3 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .log-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .log-item {
+      padding: 10px 12px;
+      background: var(--parking-bg-page, #f5f7fa);
+      border-radius: 6px;
+      font-size: 13px;
+      display: flex;
+      gap: 12px;
+    }
+    .log-time {
+      color: var(--parking-color-text-tertiary, #c0c4cc);
+      flex-shrink: 0;
+      font-family: monospace;
+    }
+    .log-event {
+      font-weight: 500;
+      color: var(--parking-color-primary, #2563eb);
+      flex-shrink: 0;
+      min-width: 80px;
+    }
+    .log-data {
+      color: var(--parking-color-text-secondary, #606266);
+      word-break: break-all;
+    }
+    .empty-log {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--parking-color-text-tertiary, #c0c4cc);
+      font-size: 14px;
+    }
+    .hidden {
+      display: none !important;
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1>🚗 智慧停车 SDK 演示</h1>
-    <p>7大组件 · 16项核心能力 · 快速接入停车服务</p>
-  </div>
-
-  <div class="controls">
-    <button onclick="sdk.setTheme('light')">☀️ 浅色主题</button>
-    <button onclick="sdk.setTheme('dark')">🌙 深色主题</button>
-    <button onclick="sdk.setLanguage('zh-CN')">🇨🇳 中文</button>
-    <button onclick="sdk.setLanguage('en-US')">🇺🇸 English</button>
-    <button onclick="sdk.showToast('这是一条成功提示', 'success')">✅ Toast</button>
-    <button onclick="sdk.showError('TEST001', '这是一个错误示例')">❌ Error</button>
-  </div>
-
-  <div class="demo-grid">
-    <div class="demo-card">
-      <h3>📍 车场选择器</h3>
-      <div id="lot-selector" class="component-container"></div>
+  <div class="container">
+    <div class="header">
+      <h1 id="page-header">智慧停车 SDK 演示</h1>
+      
+      <div class="controls">
+        <div class="control-group">
+          <label id="label-theme">主题：</label>
+          <button class="btn btn-active" id="btn-theme-light">浅色</button>
+          <button class="btn" id="btn-theme-dark">深色</button>
+        </div>
+        <div class="control-group">
+          <label id="label-language">语言：</label>
+          <button class="btn btn-active" id="btn-lang-zh">中文</button>
+          <button class="btn" id="btn-lang-en">English</button>
+        </div>
+        <div class="control-group">
+          <button class="btn" id="btn-toast">显示Toast</button>
+          <button class="btn" id="btn-error">显示错误</button>
+          <button class="btn" id="btn-loading">显示加载</button>
+        </div>
+      </div>
     </div>
 
-    <div class="demo-card">
-      <h3>🅿️ 余位面板</h3>
-      <div id="space-panel" class="component-container"></div>
+    <div class="scenario-tabs" id="scenario-tabs">
+      <button class="scenario-tab active" data-scenario="carOwner">车主</button>
+      <button class="scenario-tab" data-scenario="mall">商场</button>
+      <button class="scenario-tab" data-scenario="property">物业</button>
     </div>
 
-    <div class="demo-card">
-      <h3>🚙 车牌输入</h3>
-      <div id="plate-input" class="component-container"></div>
+    <div id="content-carOwner">
+      <div class="section">
+        <h2 class="section-title" id="title-parking">车场选择器</h2>
+        <div class="component-wrapper">
+          <div id="parking-lot-selector"></div>
+        </div>
+      </div>
+
+      <div class="section two-column">
+        <div>
+          <h2 class="section-title" id="title-space">余位面板</h2>
+          <div class="component-wrapper">
+            <div id="space-panel"></div>
+          </div>
+        </div>
+        <div>
+          <h2 class="section-title" id="title-plate">车牌输入</h2>
+          <div class="component-wrapper">
+            <div id="plate-input"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title" id="title-order">停车订单卡片</h2>
+        <div class="component-wrapper">
+          <div id="order-card"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title" id="title-coupon">优惠券列表</h2>
+        <div class="component-wrapper">
+          <div id="coupon-list"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title" id="title-payment">支付结果</h2>
+        <div class="component-wrapper">
+          <div id="payment-result"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title" id="title-invoice">发票申请</h2>
+        <div class="component-wrapper">
+          <div id="invoice-apply"></div>
+        </div>
+      </div>
     </div>
 
-    <div class="demo-card">
-      <h3>📋 停车订单卡片</h3>
-      <div id="order-card" class="component-container"></div>
+    <div id="content-mall" class="hidden">
+      <div class="section">
+        <h2 class="section-title" id="title-mall-coupon">优惠券核销</h2>
+        <div class="component-wrapper">
+          <div id="coupon-list-mall"></div>
+        </div>
+      </div>
+      <div class="section">
+        <h2 class="section-title" id="title-mall-payment">支付结果</h2>
+        <div class="component-wrapper">
+          <div id="payment-result-mall"></div>
+        </div>
+      </div>
     </div>
 
-    <div class="demo-card">
-      <h3>🎫 优惠券组件</h3>
-      <div id="coupon-list" class="component-container"></div>
+    <div id="content-property" class="hidden">
+      <div class="section extra-section">
+        <div class="mini-panel" id="panel-monthly">
+          <h3 id="title-monthly">月卡状态</h3>
+          <div id="monthly-card-content"></div>
+        </div>
+        <div class="mini-panel" id="panel-visitor">
+          <h3 id="title-visitor">访客码校验</h3>
+          <input type="text" class="mini-input" id="visitor-code-input" placeholder="请输入访客码">
+          <button class="btn btn-primary" id="btn-validate-visitor" style="width: 100%;">校验</button>
+          <div id="visitor-result" style="margin-top: 16px;"></div>
+        </div>
+        <div class="mini-panel" id="panel-parking-spot">
+          <h3 id="title-find-car">寻车点展示</h3>
+          <input type="text" class="mini-input" id="find-car-input" placeholder="请输入车牌号">
+          <button class="btn btn-primary" id="btn-find-car" style="width: 100%;">查找</button>
+          <div id="find-car-result" style="margin-top: 16px;"></div>
+        </div>
+      </div>
+      <div class="section">
+        <h2 class="section-title" id="title-property-space">余位面板</h2>
+        <div class="component-wrapper">
+          <div id="space-panel-property"></div>
+        </div>
+      </div>
     </div>
 
-    <div class="demo-card">
-      <h3>💰 支付结果页</h3>
-      <div id="payment-result" class="component-container"></div>
-    </div>
-
-    <div class="demo-card">
-      <h3>🧾 发票申请页</h3>
-      <div id="invoice-apply" class="component-container"></div>
+    <div class="section">
+      <div class="log-panel">
+        <div class="log-header">
+          <h3 id="title-log">事件日志</h3>
+          <button class="btn" id="btn-clear-log">清空日志</button>
+        </div>
+        <div class="log-list" id="log-list">
+          <div class="empty-log" id="empty-log">暂无事件</div>
+        </div>
+      </div>
     </div>
   </div>
 
   <script type="module">
     import sdk from './src/index.ts';
-
-    window.sdk = sdk;
-
-    sdk.init({
-      apiBaseUrl: 'https://api.example.com',
-      appId: 'demo-app-001',
-      theme: 'light',
-      language: 'zh-CN',
-      trackEvent: (event, data) => {
-        console.log('[Track]', event, data);
-      },
-      onError: (error) => {
-        console.error('[Error]', error);
-      },
-      onLoadingChange: (isLoading) => {
-        console.log('[Loading]', isLoading);
-      },
-    });
 
     const mockParkingLots = [
       {
@@ -183,6 +427,21 @@
       },
     ];
 
+    const mockCouponsByLot = {
+      'lot001': [
+        { id: 'c1', name: '8折优惠券', type: 'discount', value: 8, minAmount: 20, status: 'available', expireTime: '2024-12-31', lotId: 'lot001' },
+        { id: 'c2', name: '5元抵扣券', type: 'amount', value: 5, status: 'available', expireTime: '2024-12-31', lotId: 'lot001' },
+        { id: 'c3', name: '2小时免费', type: 'free_hours', value: 2, status: 'available', expireTime: '2024-12-31', lotId: 'lot001' },
+      ],
+      'lot002': [
+        { id: 'c4', name: '满20减10', type: 'amount', value: 10, minAmount: 20, status: 'available', expireTime: '2024-12-31', lotId: 'lot002' },
+        { id: 'c5', name: '7折券', type: 'discount', value: 7, status: 'available', expireTime: '2024-11-30', lotId: 'lot002' },
+      ],
+      'lot003': [
+        { id: 'c6', name: '9折优惠券', type: 'discount', value: 9, status: 'available', expireTime: '2024-12-31', lotId: 'lot003' },
+      ],
+    };
+
     const mockOrder = {
       id: 'order001',
       orderNo: 'PK202401150001',
@@ -196,42 +455,6 @@
       payableAmount: 15.0,
       status: 'pending',
     };
-
-    const mockCoupons = [
-      {
-        id: 'cp001',
-        name: '新用户专享优惠券',
-        type: 'amount',
-        value: 10,
-        minAmount: 20,
-        expireTime: '2024-02-28',
-        status: 'available',
-      },
-      {
-        id: 'cp002',
-        name: '停车8折券',
-        type: 'discount',
-        value: 8,
-        expireTime: '2024-01-31',
-        status: 'available',
-      },
-      {
-        id: 'cp003',
-        name: '免费停车2小时',
-        type: 'free_hours',
-        value: 2,
-        expireTime: '2024-03-15',
-        status: 'available',
-      },
-      {
-        id: 'cp004',
-        name: '已使用的优惠券',
-        type: 'amount',
-        value: 5,
-        expireTime: '2024-01-10',
-        status: 'used',
-      },
-    ];
 
     const mockVehicles = [
       {
@@ -250,90 +473,461 @@
       },
     ];
 
-    sdk.createComponent('parking-lot-selector', {
-      container: '#lot-selector',
-      data: {
-        parkingLots: mockParkingLots,
-        selectedLotId: 'lot001',
+    const mockMonthlyCard = {
+      id: 'mc001',
+      lotId: 'lot001',
+      lotName: '国贸中心停车场',
+      type: 'monthly',
+      status: 'active',
+      remainingDays: 15,
+      startDate: '2024-01-01',
+      endDate: '2024-06-30',
+      plateNumber: '京A12345',
+    };
+
+    const mockVisitorCodes = {
+      'VALID123': { code: 'VALID123', status: 'valid', plateNumber: '京C11111', expireTime: '2024-01-20T23:59:59' },
+      'USED456': { code: 'USED456', status: 'used', plateNumber: '京C22222', usedTime: '2024-01-10T10:30:00' },
+      'EXPIRED789': { code: 'EXPIRED789', status: 'expired', plateNumber: '京C33333', expireTime: '2024-01-01T23:59:59' },
+    };
+
+    const mockParkingSpots = {
+      '京A12345': { floor: 'B2', area: 'A区', spotNo: 'A025', distance: 45 },
+      '京B67890': { floor: 'B1', area: 'B区', spotNo: 'B118', distance: 120 },
+    };
+
+    sdk.init({
+      apiBaseUrl: 'https://api.example.com',
+      appId: 'demo-app',
+      theme: 'light',
+      language: 'zh-CN',
+      trackEvent: (event, data) => {
+        console.log('[Track]', event, data);
       },
-      onEvent: (event, data) => {
-        console.log('[ParkingLotSelector]', event, data);
+      onError: (error) => {
+        console.error('[SDK Error]', error);
+      },
+      refreshToken: async () => {
+        return 'new-demo-token';
       },
     });
 
-    sdk.createComponent('space-panel', {
-      container: '#space-panel',
-      data: {
-        parkingLot: mockParkingLots[0],
-      },
-    });
+    sdk.setToken('demo-token-12345');
 
-    sdk.createComponent('plate-input', {
-      container: '#plate-input',
-      data: {
-        plateNumber: '京A',
-        vehicles: mockVehicles,
-      },
-      onEvent: (event, data) => {
-        console.log('[PlateInput]', event, data);
-      },
-    });
+    let currentScenario = 'carOwner';
+    let selectedLotId = 'lot001';
+    let eventLogs = [];
+    let currentLang = 'zh-CN';
+    let componentInstances = {};
 
-    sdk.createComponent('order-card', {
-      container: '#order-card',
-      data: {
-        order: mockOrder,
-      },
-      onEvent: (event, data) => {
-        console.log('[OrderCard]', event, data);
-      },
-    });
+    function t(key) {
+      return sdk.getI18n().t(key);
+    }
 
-    sdk.createComponent('coupon-list', {
-      container: '#coupon-list',
-      data: {
-        coupons: mockCoupons,
-        orderAmount: 20,
-      },
-      onEvent: (event, data) => {
-        console.log('[CouponList]', event, data);
-      },
-    });
+    function addLog(eventName, data = {}) {
+      const now = new Date();
+      const timeStr = now.toTimeString().slice(0, 8);
+      const dataStr = Object.keys(data).length ? JSON.stringify(data) : '';
+      eventLogs.unshift({ time: timeStr, event: eventName, data: dataStr });
+      if (eventLogs.length > 50) eventLogs.pop();
+      renderLogList();
+    }
 
-    sdk.createComponent('payment-result', {
-      container: '#payment-result',
-      data: {
-        success: true,
-        order: mockOrder,
-        paidAmount: 15.0,
-        paymentMethod: 'wechat',
-        transactionId: 'wx202401150001',
-      },
-      onEvent: (event, data) => {
-        console.log('[PaymentResult]', event, data);
-      },
-    });
+    function renderLogList() {
+      const listEl = document.getElementById('log-list');
+      const emptyEl = document.getElementById('empty-log');
+      
+      if (eventLogs.length === 0) {
+        emptyEl.classList.remove('hidden');
+        listEl.innerHTML = '';
+        listEl.appendChild(emptyEl);
+        return;
+      }
+      
+      emptyEl.classList.add('hidden');
+      listEl.innerHTML = '';
+      
+      eventLogs.forEach(log => {
+        const item = document.createElement('div');
+        item.className = 'log-item';
+        item.innerHTML = `
+          <span class="log-time">${log.time}</span>
+          <span class="log-event">${log.event}</span>
+          <span class="log-data">${log.data}</span>
+        `;
+        listEl.appendChild(item);
+      });
+    }
 
-    sdk.createComponent('invoice-apply', {
-      container: '#invoice-apply',
-      data: {
-        orders: [mockOrder],
-        totalAmount: 15.0,
-      },
-      onEvent: (event, data) => {
-        console.log('[InvoiceApply]', event, data);
-        if (event === 'submit') {
-          sdk.showToast('发票申请已提交', 'success');
-          if (data && typeof data.done === 'function') {
-            data.done(true);
-          }
+    function updateDemoTexts() {
+      document.getElementById('page-title').textContent = t('demo.pageTitle');
+      document.getElementById('page-header').textContent = t('demo.pageTitle');
+      document.getElementById('label-theme').textContent = t('demo.theme') + '：';
+      document.getElementById('btn-theme-light').textContent = t('demo.light');
+      document.getElementById('btn-theme-dark').textContent = t('demo.dark');
+      document.getElementById('label-language').textContent = t('demo.language') + '：';
+      document.getElementById('btn-toast').textContent = t('demo.showToast');
+      document.getElementById('btn-error').textContent = t('demo.showError');
+      document.getElementById('btn-loading').textContent = t('demo.showLoading');
+      document.getElementById('title-parking').textContent = t('demo.parkingLotSelector');
+      document.getElementById('title-space').textContent = t('demo.spacePanel');
+      document.getElementById('title-plate').textContent = t('demo.plateInput');
+      document.getElementById('title-order').textContent = t('demo.orderCard');
+      document.getElementById('title-coupon').textContent = t('demo.couponList');
+      document.getElementById('title-payment').textContent = t('demo.paymentResult');
+      document.getElementById('title-invoice').textContent = t('demo.invoiceApply');
+      document.getElementById('title-mall-coupon').textContent = t('demo.couponList');
+      document.getElementById('title-mall-payment').textContent = t('demo.paymentResult');
+      document.getElementById('title-monthly').textContent = t('demo.monthlyCard');
+      document.getElementById('title-visitor').textContent = t('demo.visitorCode');
+      document.getElementById('title-find-car').textContent = t('demo.parkingSpot');
+      document.getElementById('title-property-space').textContent = t('demo.spacePanel');
+      document.getElementById('title-log').textContent = t('demo.eventLog');
+      document.getElementById('btn-clear-log').textContent = t('demo.clearLog');
+      document.getElementById('btn-validate-visitor').textContent = t('visitor.validate');
+      document.getElementById('btn-find-car').textContent = t('findCar.navigate');
+      document.getElementById('visitor-code-input').placeholder = t('visitor.inputPlaceholder');
+      document.getElementById('find-car-input').placeholder = t('findCar.inputPlaceholder');
+      document.getElementById('empty-log').textContent = t('common.noData');
+      
+      const tabs = document.querySelectorAll('.scenario-tab');
+      tabs[0].textContent = t('demo.carOwner');
+      tabs[1].textContent = t('demo.mall');
+      tabs[2].textContent = t('demo.property');
+      
+      renderMonthlyCard();
+    }
+
+    function renderMonthlyCard() {
+      const container = document.getElementById('monthly-card-content');
+      if (!container) return;
+      
+      const statusClass = mockMonthlyCard.status === 'active' ? 'status-active' : 'status-error';
+      const statusText = mockMonthlyCard.status === 'active' ? t('monthlyCard.active') : t('monthlyCard.expired');
+      
+      container.innerHTML = `
+        <div class="info-row">
+          <span class="info-label">${t('parking.parkingLot')}</span>
+          <span class="info-value">${mockMonthlyCard.lotName}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">${t('plate.title')}</span>
+          <span class="info-value">${mockMonthlyCard.plateNumber}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">${t('common.viewDetail')}</span>
+          <span class="status-tag ${statusClass}">${statusText}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">${t('monthlyCard.remainingDays').replace('{days}', '')}</span>
+          <span class="info-value">${mockMonthlyCard.remainingDays}天</span>
+        </div>
+      `;
+    }
+
+    function getSelectedLot() {
+      return mockParkingLots.find(lot => lot.id === selectedLotId) || mockParkingLots[0];
+    }
+
+    function getCouponsForLot(lotId) {
+      return mockCouponsByLot[lotId] || [];
+    }
+
+    function recreateComponents() {
+      const selectedLot = getSelectedLot();
+      const coupons = getCouponsForLot(selectedLotId);
+      const orderForLot = { ...mockOrder, parkingLotId: selectedLot.id, parkingLotName: selectedLot.name };
+      const currentLanguage = sdk.getConfig().language;
+
+      Object.values(componentInstances).forEach(comp => {
+        if (comp && typeof comp.destroy === 'function') {
+          comp.destroy();
         }
-      },
+      });
+      componentInstances = {};
+
+      componentInstances['parking-lot-selector'] = sdk.createComponent('parking-lot-selector', {
+        container: '#parking-lot-selector',
+        data: { parkingLots: mockParkingLots, selectedLotId: selectedLotId },
+        onEvent: (event, data) => {
+          console.log('[ParkingLotSelector]', event, data);
+          if (event === 'search') {
+            addLog(currentLanguage === 'zh-CN' ? '搜索车场' : 'Search Lot', data);
+          } else if (event === 'select') {
+            selectedLotId = data.id;
+            addLog(currentLanguage === 'zh-CN' ? '选择车场' : 'Select Lot', { name: data.name });
+            recreateComponents();
+          }
+        },
+      });
+
+      componentInstances['space-panel'] = sdk.createComponent('space-panel', {
+        container: '#space-panel',
+        data: { parkingLot: selectedLot },
+      });
+
+      componentInstances['plate-input'] = sdk.createComponent('plate-input', {
+        container: '#plate-input',
+        data: { vehicles: mockVehicles, showBindButton: true },
+        onEvent: (event, data) => {
+          console.log('[PlateInput]', event, data);
+          if (event === 'bind') {
+            addLog(currentLanguage === 'zh-CN' ? '绑定车辆' : 'Bind Vehicle', data);
+          } else if (event === 'select') {
+            addLog(currentLanguage === 'zh-CN' ? '选择车辆' : 'Select Vehicle', data);
+          }
+        },
+      });
+
+      componentInstances['order-card'] = sdk.createComponent('order-card', {
+        container: '#order-card',
+        data: { order: orderForLot },
+        onEvent: (event, data) => {
+          console.log('[OrderCard]', event, data);
+          if (event === 'pay') {
+            addLog(currentLanguage === 'zh-CN' ? '发起支付' : 'Pay', { amount: data.order.payableAmount });
+          } else if (event === 'apply-invoice') {
+            addLog(currentLanguage === 'zh-CN' ? '申请发票' : 'Apply Invoice', data);
+          } else if (event === 'select-coupon') {
+            addLog(currentLanguage === 'zh-CN' ? '选择优惠券' : 'Select Coupon', data);
+          }
+        },
+      });
+
+      componentInstances['coupon-list'] = sdk.createComponent('coupon-list', {
+        container: '#coupon-list',
+        data: { coupons: coupons, orderAmount: orderForLot.payableAmount },
+        onEvent: (event, data) => {
+          console.log('[CouponList]', event, data);
+          if (event === 'select') {
+            addLog(currentLanguage === 'zh-CN' ? '选择优惠券' : 'Select Coupon', { name: data.name });
+          } else if (event === 'unselect') {
+            addLog(currentLanguage === 'zh-CN' ? '取消选择' : 'Unselect Coupon', { name: data.name });
+          }
+        },
+      });
+
+      componentInstances['payment-result'] = sdk.createComponent('payment-result', {
+        container: '#payment-result',
+        data: {
+          success: true,
+          amount: orderForLot.payableAmount,
+          orderNo: orderForLot.orderNo,
+          transactionId: 'TXN2024011500001',
+          parkingLotName: selectedLot.name,
+          plateNumber: orderForLot.plateNumber,
+        },
+        onEvent: (event, data) => {
+          console.log('[PaymentResult]', event, data);
+          if (event === 'back-home') {
+            addLog(currentLanguage === 'zh-CN' ? '返回首页' : 'Back Home', data);
+          } else if (event === 'view-order') {
+            addLog(currentLanguage === 'zh-CN' ? '查看订单' : 'View Order', data);
+          }
+        },
+      });
+
+      componentInstances['invoice-apply'] = sdk.createComponent('invoice-apply', {
+        container: '#invoice-apply',
+        data: {
+          orders: [orderForLot],
+          totalAmount: orderForLot.payableAmount,
+        },
+        onEvent: (event, data) => {
+          console.log('[InvoiceApply]', event, data);
+          if (event === 'submit') {
+            addLog(currentLanguage === 'zh-CN' ? '提交发票' : 'Submit Invoice', { title: data.title });
+            sdk.showToast(t('invoice.success'), 'success');
+            if (data && typeof data.done === 'function') {
+              data.done(true);
+            }
+          }
+        },
+      });
+
+      componentInstances['coupon-list-mall'] = sdk.createComponent('coupon-list', {
+        container: '#coupon-list-mall',
+        data: { coupons: coupons, orderAmount: orderForLot.payableAmount },
+        onEvent: (event, data) => {
+          if (event === 'select') {
+            addLog(currentLanguage === 'zh-CN' ? '核销优惠券' : 'Redeem Coupon', { name: data.name });
+          }
+        },
+      });
+
+      componentInstances['payment-result-mall'] = sdk.createComponent('payment-result', {
+        container: '#payment-result-mall',
+        data: {
+          success: true,
+          amount: orderForLot.payableAmount,
+          orderNo: orderForLot.orderNo,
+          transactionId: 'TXN-MALL-001',
+          parkingLotName: selectedLot.name,
+        },
+        onEvent: (event, data) => {
+          if (event === 'view-order') {
+            addLog(currentLanguage === 'zh-CN' ? '查看订单' : 'View Order', data);
+          }
+        },
+      });
+
+      componentInstances['space-panel-property'] = sdk.createComponent('space-panel', {
+        container: '#space-panel-property',
+        data: { parkingLot: selectedLot },
+      });
+
+      renderMonthlyCard();
+    }
+
+    document.getElementById('btn-theme-light').addEventListener('click', () => {
+      sdk.setTheme('light');
+      document.getElementById('btn-theme-light').classList.add('btn-active');
+      document.getElementById('btn-theme-dark').classList.remove('btn-active');
+      addLog('主题切换', { theme: 'light' });
     });
 
-    console.log('✅ 智慧停车SDK 已初始化完成');
-    console.log('📦 可用组件:', ['parking-lot-selector', 'space-panel', 'plate-input', 'order-card', 'coupon-list', 'payment-result', 'invoice-apply']);
-    console.log('⚡ 可用API:', Object.keys(sdk).filter(k => typeof sdk[k] === 'function').slice(0, 10), '...');
+    document.getElementById('btn-theme-dark').addEventListener('click', () => {
+      sdk.setTheme('dark');
+      document.getElementById('btn-theme-dark').classList.add('btn-active');
+      document.getElementById('btn-theme-light').classList.remove('btn-active');
+      addLog('主题切换', { theme: 'dark' });
+    });
+
+    document.getElementById('btn-lang-zh').addEventListener('click', () => {
+      sdk.setLanguage('zh-CN');
+      currentLang = 'zh-CN';
+      document.getElementById('btn-lang-zh').classList.add('btn-active');
+      document.getElementById('btn-lang-en').classList.remove('btn-active');
+      updateDemoTexts();
+      recreateComponents();
+      addLog('语言切换', { language: 'zh-CN' });
+    });
+
+    document.getElementById('btn-lang-en').addEventListener('click', () => {
+      sdk.setLanguage('en-US');
+      currentLang = 'en-US';
+      document.getElementById('btn-lang-en').classList.add('btn-active');
+      document.getElementById('btn-lang-zh').classList.remove('btn-active');
+      updateDemoTexts();
+      recreateComponents();
+      addLog('语言切换', { language: 'en-US' });
+    });
+
+    document.getElementById('btn-toast').addEventListener('click', () => {
+      sdk.showToast(t('common.confirm'), 'success');
+      addLog(t('demo.showToast'));
+    });
+
+    document.getElementById('btn-error').addEventListener('click', () => {
+      sdk.showError('ERROR_001', t('common.error'));
+      addLog(t('demo.showError'));
+    });
+
+    document.getElementById('btn-loading').addEventListener('click', () => {
+      sdk.showLoading();
+      addLog(t('demo.showLoading'));
+      setTimeout(() => sdk.hideLoading(), 2000);
+    });
+
+    document.getElementById('btn-clear-log').addEventListener('click', () => {
+      eventLogs = [];
+      renderLogList();
+    });
+
+    document.querySelectorAll('.scenario-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.scenario-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const scenario = tab.dataset.scenario;
+        currentScenario = scenario;
+        
+        document.getElementById('content-carOwner').classList.add('hidden');
+        document.getElementById('content-mall').classList.add('hidden');
+        document.getElementById('content-property').classList.add('hidden');
+        document.getElementById('content-' + scenario).classList.remove('hidden');
+        
+        addLog(currentLang === 'zh-CN' ? '切换场景' : 'Switch Scenario', { scenario });
+      });
+    });
+
+    document.getElementById('btn-validate-visitor').addEventListener('click', () => {
+      const code = document.getElementById('visitor-code-input').value.trim().toUpperCase();
+      const resultEl = document.getElementById('visitor-result');
+      
+      if (!code) {
+        resultEl.innerHTML = `<div class="status-tag status-warning">${t('common.error')}</div>`;
+        return;
+      }
+      
+      const visitorData = mockVisitorCodes[code];
+      if (visitorData) {
+        let statusClass, statusText;
+        if (visitorData.status === 'valid') {
+          statusClass = 'status-active';
+          statusText = t('visitor.valid');
+        } else if (visitorData.status === 'used') {
+          statusClass = 'status-warning';
+          statusText = t('visitor.used');
+        } else {
+          statusClass = 'status-error';
+          statusText = t('visitor.expired');
+        }
+        resultEl.innerHTML = `
+          <div class="info-row">
+            <span class="info-label">${t('visitor.title')}</span>
+            <span class="status-tag ${statusClass}">${statusText}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">${t('plate.title')}</span>
+            <span class="info-value">${visitorData.plateNumber}</span>
+          </div>
+        `;
+        addLog(currentLang === 'zh-CN' ? '校验访客码' : 'Validate Visitor', { code, status: visitorData.status });
+      } else {
+        resultEl.innerHTML = `<div class="status-tag status-error">${t('common.error')}: Invalid Code</div>`;
+        addLog(currentLang === 'zh-CN' ? '访客码无效' : 'Invalid Visitor Code', { code });
+      }
+    });
+
+    document.getElementById('btn-find-car').addEventListener('click', () => {
+      const plate = document.getElementById('find-car-input').value.trim();
+      const resultEl = document.getElementById('find-car-result');
+      
+      if (!plate) {
+        resultEl.innerHTML = `<div class="status-tag status-warning">${t('common.error')}</div>`;
+        return;
+      }
+      
+      const spot = mockParkingSpots[plate];
+      if (spot) {
+        resultEl.innerHTML = `
+          <div class="info-row">
+            <span class="info-label">${t('findCar.floor')}</span>
+            <span class="info-value">${spot.floor}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">${t('findCar.area')}</span>
+            <span class="info-value">${spot.area}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">${t('findCar.spot')}</span>
+            <span class="info-value">${spot.spotNo}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">${t('findCar.distance').replace('{distance}', '')}</span>
+            <span class="info-value">${spot.distance}m</span>
+          </div>
+        `;
+        addLog(currentLang === 'zh-CN' ? '查找车辆' : 'Find Car', { plate, spot: spot.spotNo });
+      } else {
+        resultEl.innerHTML = `<div class="status-tag status-error">${t('common.noData')}</div>`;
+        addLog(currentLang === 'zh-CN' ? '未找到车辆' : 'Car Not Found', { plate });
+      }
+    });
+
+    updateDemoTexts();
+    recreateComponents();
+    renderLogList();
   </script>
 </body>
 </html>
