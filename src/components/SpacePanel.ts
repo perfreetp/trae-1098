@@ -66,7 +66,12 @@ export class SpacePanel extends BaseComponent {
         align-items: center;
         gap: 8px;
       `;
-      lotName.innerHTML = `📍 ${this.parkingLot.name}`;
+      const iconSpan = document.createElement('span');
+      iconSpan.textContent = '📍';
+      const textSpan = document.createElement('span');
+      textSpan.textContent = this.parkingLot.name;
+      lotName.appendChild(iconSpan);
+      lotName.appendChild(textSpan);
       card.appendChild(lotName);
     }
 

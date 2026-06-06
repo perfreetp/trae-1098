@@ -16,6 +16,7 @@ const locales: Record<Language, LocaleData> = {
       delete: '删除',
       search: '搜索',
       noData: '暂无数据',
+      viewDetail: '查看详情',
     },
     parking: {
       parkingLot: '停车场',
@@ -130,6 +131,7 @@ const locales: Record<Language, LocaleData> = {
       delete: 'Delete',
       search: 'Search',
       noData: 'No data',
+      viewDetail: 'View Details',
     },
     parking: {
       parkingLot: 'Parking Lot',

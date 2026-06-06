@@ -240,14 +240,14 @@ export class OrderCard extends BaseComponent {
     } else if (this.order!.status === 'paid' || this.order!.status === 'completed') {
       const invoiceBtn = document.createElement('button');
       invoiceBtn.className = 'parking-sdk-btn parking-sdk-btn-default parking-sdk-btn-block';
-      invoiceBtn.textContent = this.t('invoice.title');
+      invoiceBtn.textContent = this.t('invoice.pageTitle');
       invoiceBtn.addEventListener('click', () => {
         this.emit('apply-invoice', { order: this.order });
       });
 
       const detailBtn = document.createElement('button');
       detailBtn.className = 'parking-sdk-btn parking-sdk-btn-primary parking-sdk-btn-block';
-      detailBtn.textContent = '查看详情';
+      detailBtn.textContent = this.t('common.viewDetail');
       detailBtn.addEventListener('click', () => {
         this.emit('view-detail', { order: this.order });
       });

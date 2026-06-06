@@ -70,7 +70,7 @@ export class ParkingLotSelector extends BaseComponent {
     searchInput.addEventListener('input', (e) => {
       this.searchKeyword = (e.target as HTMLInputElement).value;
       this.emit('search', { keyword: this.searchKeyword });
-      this.renderLotList();
+      this.render();
     });
 
     const searchIcon = document.createElement('span');
@@ -211,7 +211,12 @@ export class ParkingLotSelector extends BaseComponent {
       align-items: center;
       gap: 4px;
     `;
-    address.innerHTML = `📍 ${lot.address}`;
+    const iconSpan = document.createElement('span');
+    iconSpan.textContent = '📍';
+    const textSpan = document.createElement('span');
+    textSpan.textContent = lot.address;
+    address.appendChild(iconSpan);
+    address.appendChild(textSpan);
 
     if (this.showDistance && lot.distance !== undefined) {
       const distance = document.createElement('span');

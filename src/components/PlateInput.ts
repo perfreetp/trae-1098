@@ -148,6 +148,9 @@ export class PlateInput extends BaseComponent {
 
     inputWrapper.appendChild(input);
 
+    inputRow.appendChild(provinceBtn);
+    inputRow.appendChild(inputWrapper);
+
     if (this.showBindButton) {
       const bindBtn = document.createElement('button');
       bindBtn.type = 'button';
@@ -163,9 +166,6 @@ export class PlateInput extends BaseComponent {
       });
       inputRow.appendChild(bindBtn);
     }
-
-    inputRow.insertBefore(provinceBtn, inputWrapper);
-    inputRow.appendChild(inputWrapper);
 
     if (!this.isValid && this.plateNumber) {
       const errorTip = document.createElement('div');

@@ -67,7 +67,7 @@ export class InvoiceApply extends BaseComponent {
       color: var(--parking-color-text-primary);
       margin-bottom: 20px;
     `;
-    title.textContent = this.t('invoice.title');
+    title.textContent = this.t('invoice.pageTitle');
     wrapper.appendChild(title);
 
     this.renderOrderList(wrapper);
@@ -113,10 +113,17 @@ export class InvoiceApply extends BaseComponent {
       `;
 
       const left = document.createElement('div');
-      left.innerHTML = `
-        <div style="font-size: 14px; color: var(--parking-color-text-primary);">${order.parkingLotName}</div>
-        <div style="font-size: 12px; color: var(--parking-color-text-tertiary); margin-top: 2px;">${order.plateNumber} · ${order.orderNo}</div>
-      `;
+
+      const lotNameDiv = document.createElement('div');
+      lotNameDiv.style.cssText = 'font-size: 14px; color: var(--parking-color-text-primary);';
+      lotNameDiv.textContent = order.parkingLotName;
+
+      const infoDiv = document.createElement('div');
+      infoDiv.style.cssText = 'font-size: 12px; color: var(--parking-color-text-tertiary); margin-top: 2px;';
+      infoDiv.textContent = `${order.plateNumber} · ${order.orderNo}`;
+
+      left.appendChild(lotNameDiv);
+      left.appendChild(infoDiv);
 
       const right = document.createElement('div');
       right.style.cssText = `
